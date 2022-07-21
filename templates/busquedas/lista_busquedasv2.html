@@ -1,0 +1,161 @@
+{% extends "base/base.html" %}
+
+{% block titulo %} 
+
+   Busquedas de jugadores
+
+{% endblock titulo %}
+
+{% block head %} 
+<style>
+.pagination > li > a,
+.pagination > li > span {
+    color: rgb(0, 85, 128); 
+}
+
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
+    background-color: #5f6bd2;
+    border-color:#5f6bd2;
+}
+
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #5f6bd2; 
+    border-color: #5f6bd2;
+}
+
+body{
+    background-color: #000000;
+}
+.card{
+    padding: .5em 1.5em 1.5em ;
+    border-radius: 1em;
+    text-align: center;
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    background-color:#191C24;
+    width: 40rem;
+    border-color: #353375;
+}
+h1{
+    color:#3e3d7a;
+    text-align: center;
+  }
+.card .btn {
+  border-radius: 1em;
+  background-color: #5f6bd2;
+  color: #ffffff;
+  padding: 0.5em 1.5em;
+  border-color: #353375;
+}
+.card .btn:hover {
+  background-color: #353375;
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  
+}
+
+.card-space {
+  margin-bottom: 20px; 
+}
+.busqueda{
+  display: flex;
+    align-items: center;
+    justify-content: center;    
+}
+</style>
+{% endblock head %}
+
+
+{% block body %}
+{% include 'includes/header.html' %}
+
+<br><h1>Plantilla</h1><br>
+
+<!--formulario para poder filtrar-->
+<!-- <div class="busqueda">
+  <form class="row gx-5" method="GET">{% csrf_token %}
+    <div class="col">
+      <div class="input-group mb-3">
+          <input type="text"  name="keyword" id="keyword" class="form-control" placeholder="Buscar partido por localidad" aria-label="Busque un partido por localidad" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+          </div>
+        </div>
+    </div>
+  </form>
+  </div>
+</div>
+<br> -->
+
+<!--fin formulario para poder filtrar-->
+
+
+<div class="row justify-content-center" >
+  {% for b in listaBusquedas %}
+    
+        <div class="card mb-3 mx-3" >
+            <!-- <h5 class="card-header">Le faltan {{b.jugadoresQueFaltan}} </h5><h4> Fecha {{b.fecha}}</h4> -->
+            <h5 class="card-header display-7 text-white">Fecha del partido: <strong >{{b.fecha|date:"d/m, Y"}} </strong></h5> 
+            <div class="card-body">
+            <!-- <h5 class="card-title">Le faltan:{{b.jugadoresQueFaltan}} </h5>      -->
+
+                    <div class="col-sm-6  text-muted">
+                        <u><strong>Descripcion</strong><br/></u>
+                        <p class="card-text text-white">{{b.descripcion|safe}}</p> 
+                     </div>
+                    <div class="col-sm-6 text-muted">
+                        <u><strong>Posiciones buscadas</strong><br/></u>
+                        {% for posicion in b.posicion.all %}
+                        <li class="text-white">{{posicion.nombre_subcategoria}}</li>
+                        {% endfor %}  
+                    </div>
+            <a href="#" class="btn ">Conectar</a>
+            </div>
+            <div class="card-footer bg-transparent border-success text-muted">En <strong class="text-white">{{b.ciudad}}</strong> - Rol buscado:   <strong class="text-white">{{b.rol.rol}}</strong></div>
+        </div>
+   
+
+    {% endfor %}
+</div>
+
+
+
+
+
+<!-- Paginacion -->
+<div class="pagination justify-content-center" >
+    <!--Si esta paginado-->
+    {% if is_paginated %}
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            
+            <!--page_obj hace referencia al obj que crea la paginacion
+            Si hay una pagina previa, mostrame el simbolo para ir para atras
+            sino mostramelo disabled-->
+                 
+              <!--page_range tiene el num de paginas-->
+            {% for pagina in paginator.page_range  %}
+
+              {% if pagina == page_obj.number  %} 
+              <li class="page-item active"><a class="page-link" href="?page={{pagina}}">{{pagina}}</a></li>
+              {% else %}
+              <li class="page-item"><a class="page-link" href="?page={{pagina}}">{{pagina}}</a></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </nav>
+      </div>
+
+    {% endif %}
+      
+  </div>
+   <!-- Fin de Paginacion -->
+
+{% endblock body %}

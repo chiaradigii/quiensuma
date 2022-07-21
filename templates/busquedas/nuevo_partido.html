@@ -1,0 +1,63 @@
+{% extends "base/base.html" %}
+
+{% block titulo %}Nuevo Partido{% endblock titulo %}
+
+{% block body %}
+<br><br>
+<div class="container">
+    {% load crispy_forms_tags %}
+
+    <h1  >Nuevo partido</h1>
+    <form method="POST">{% csrf_token %}
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6">
+                    {{form.jugadoresQueFaltan|as_crispy_field}}
+                </div>
+                <div class="col-6">
+                    {{form.posicion|as_crispy_field}}     
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6">
+                    {{form.tipo_cancha|as_crispy_field}}
+                </div>
+                <div class="col-6">
+                    {{form.tipo_suelo|as_crispy_field}}     
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6">
+                    {{form.remera_propia|as_crispy_field}}
+                </div>
+                <div class="col-6">
+                    {{form.rol|as_crispy_field}}     
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6">
+                    {{form.fecha|as_crispy_field}}
+                </div>
+                <div class="col-6">
+                    {{form.ciudad|as_crispy_field}}     
+                </div>
+            </div>
+        </div>
+   
+        <div class="form-group col-12">
+            {{form.descripcion|as_crispy_field}}
+        </div>
+ 
+        
+        <button type="submit" class="btn btn-success">Confirmar</button> 
+      </form>
+</div>
+{% endblock body %}
