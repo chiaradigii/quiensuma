@@ -1,1 +1,1 @@
-web: gunicorn workspace.wsgi:proyecto_final
+web: gunicorn proyecto_final.wsgi:proyecto_final
