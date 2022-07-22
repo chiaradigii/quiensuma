@@ -1,9 +1,8 @@
 """
-Archivo Base de configuracion para que hereden todos los entornos
+Archivo de configuracion
 """
-
 from pathlib import Path
-
+import os
 from unipath import Path
 import environ
 import django_heroku
@@ -136,20 +135,13 @@ LOGIN_REDIRECT_URL= '/pagina-principal/'
 
 django_heroku.settings(locals())
 
-import os
 
 
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG') 
-
 
 
 ALLOWED_HOSTS = env('ALLOWED_HOSTS').split( )
     
-
-
-
 
 DATABASES = {
     'default': {
